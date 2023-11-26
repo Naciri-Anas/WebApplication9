@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="./template/template.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <p:panel header="Gestion des services">
+                        <p:panelGrid  columns="2">
+                            <p:outputLabel value="Code : "></p:outputLabel>
+                            <p:inputText value="#{serviceBean.service.code}"></p:inputText>
+                            <p:outputLabel value="Libelle : "></p:outputLabel>
+                            <p:inputText value="#{serviceBean.service.libelle}"></p:inputText>
+                            <p:commandButton value="Envoyer" actionListener="#{serviceBean.onCreateAction()}" update=":services"></p:commandButton>
+                        </p:panelGrid>
+                    </p:panel>
+                </h:form>
+                <h:form id="services">
+                    <p:panel header="Liste des services">
+                        <p:dataTable var="s" value="#{serviceBean.services}">
+                            <p:column filterBy="#{s.code}" headerText="Code">
+                                <p:outputLabel value="#{s.code}"></p:outputLabel>
+                            </p:column>
+                            <p:column sortBy="#{s.libelle}" headerText="Libelle">
+                                <p:outputLabel value="#{s.libelle}"></p:outputLabel>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

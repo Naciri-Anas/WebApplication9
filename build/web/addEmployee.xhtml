@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <title></title>
+        <h:outputStylesheet library="primefaces" name="themes/nova/theme.css" />
+    </h:head>
+
+    <body>
+
+        <ui:composition template="./template/template.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <p:panelGrid columns="2" styleClass="ui-fluid">
+                        <p:outputLabel value="Nom:" for="nom" />
+                        <p:inputText id="nom" value="#{employeBean.employe.nom}" />
+
+                        <p:outputLabel value="Prenom:" for="prenom" />
+                        <p:inputText id="prenom" value="#{employeBean.employe.prenom}" />
+
+                        <p:outputLabel value="Date de Naissance:" for="dateNaissance" />
+                        <p:calendar id="dateNaissance" value="#{employeBean.employe.dateNaissance}" showOn="button" />
+
+                        <p:outputLabel value="Service:" for="service" />
+                        <p:selectOneMenu id="service" value="#{employeBean.employe.service}" required="true" effect="fold">
+                            <f:selectItem itemLabel="Select One" itemValue="" />
+                            <f:selectItems value="#{serviceBean.services}" var="s" itemLabel="#{s.libelle}" itemValue="#{s}" />
+                        </p:selectOneMenu>
+
+                        <p:commandButton value="submit" actionListener="#{employeBean.onCreateAction()}" update=":employes" styleClass="p-button-success" />
+
+                    </p:panelGrid>
+                </h:form>
+
+                <h:form id="employes">
+                    <p:dataTable var="s" value="#{employeBean.employes}" styleClass="ui-datatable-striped">
+                        <p:column headerText="Nom">
+                            <h:outputText value="#{s.nom}" />
+                        </p:column>
+                        <p:column headerText="Prenom">
+                            <h:outputText value="#{s.prenom}" />
+                        </p:column>
+                        <p:column headerText="Date Naissance">
+                            <h:outputText value="#{s.dateNaissance}">
+                                <f:convertDateTime pattern="yyyy-MM-dd" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Service">
+                            <h:outputText value="#{s.service.libelle}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
